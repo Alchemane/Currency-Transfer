@@ -1,0 +1,280 @@
+/* reset some default margins */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* smooth transitions everywhere */
+*, *::before, *::after {
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* top navigation */
+nav {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 25px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav a.active {
+    color: #0074D9;
+}
+
+nav a:hover {
+    color: #005fa3;
+}
+
+/* main layout */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* sidebar */
+.sidebar {
+    width: 220px;
+    background-color: white;
+    height: 100vh;
+    padding: 30px 20px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.sidebar a:hover {
+    background-color: #f0f8ff;
+    color: #0074D9;
+}
+
+/* main content */
+.main-content {
+    margin-left: 240px;
+    padding: 40px;
+    width: calc(100% - 240px);
+}
+
+body.no-sidebar .main-content {
+    margin: 0 auto;
+    padding: 30px;
+    width: 80%;
+    max-width: 900px;
+}
+
+/* hero section */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(to right, #0074D9, #005fa3);
+    color: white;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+/* card components */
+.card {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+}
+
+.card ul .button {
+    width: fit-content;
+    min-width: 220px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.card ul li {
+    margin-bottom: 12px;
+}
+
+/* forms */
+form {
+    background-color: white;
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form select, form textarea, form button {
+    margin-bottom: 18px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+form button {
+    background-color: #0074D9;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #005fa3;
+}
+
+/* buttons */
+.button {
+    background-color: #0074D9;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #005fa3;
+}
+
+/* tables */
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+
+th {
+    background-color: #0074D9;
+    color: white;
+}
+
+/* auth container signup + login */
+.auth-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+footer {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+/* about page stuffs */
+.card p, .card ul {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.card ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.card ul li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+/* checkmark bullet points just because it looks professional as heck*/
+body.no-sidebar .card ul li::before {
+    content: '✔';
+    color: #0074D9;
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+.card p:first-of-type {
+    font-weight: bold;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+}
