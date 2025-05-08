@@ -1,8 +1,7 @@
 <?php
 include "../components/session_protect.php";
 include "../components/config.php";
-include "../components/header.php";
-include "../components/sidebar_admin.php";
+
 
 if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -37,7 +36,10 @@ $accounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <link rel="stylesheet" href="../css/styles.css">
-
+<?php
+include "../components/header.php";
+include "../components/sidebar_admin.php";
+?>
 <div class="main-content">
     <h2>Manage Accounts</h2>
 

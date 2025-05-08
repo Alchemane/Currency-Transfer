@@ -1,5 +1,10 @@
 <?php
 include "components/session_protect.php";
+
+$deletionMessage = "";
+if (isset($_GET['account_deleted']) && $_GET['account_deleted'] == 1) {
+    $deletionMessage = "Your account has been deleted successfully.";
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +20,10 @@ include "components/session_protect.php";
 <section class="hero">
     <h1>Welcome to FluxPay</h1>
     <p>Send and receive money internationally with ease and security.</p>
+
+    <?php if (!empty($deletionMessage)): ?>
+        <p style="color:red; text-align:center;"><?php echo $deletionMessage; ?></p>
+    <?php endif; ?>
 
     <?php if (!isset($_SESSION['role'])): ?>
         <a href="php/signup.php" class="button">Get started</a>

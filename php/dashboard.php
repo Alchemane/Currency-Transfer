@@ -3,16 +3,16 @@ include "../components/session_protect.php";
 include "../components/config.php";
 include "../components/protect_user.php";
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
-
 // fetch user info
 $query = "SELECT firstName, lastName, userStatus FROM User WHERE userID = :id";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['id' => $_SESSION['user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// check for any under review suspicious activiyy
+$suspiciousStmt = $pdo->prepare("SELECT COUNT(*) FROM SuspiciousActivity WHERE userID = :id AND status = 'Under Review'");
+$suspiciousStmt->execute(['id' => $_SESSION['user_id']]);
+$isFlagged = $suspiciousStmt->fetchColumn() > 0;
 
 // fetch users accounts
 $query = "SELECT a.balance, a.accountNumber, c.currencyCode 
@@ -45,7 +45,11 @@ $accounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p><strong>Your Account Is Suspended.</strong> You can <a href="refund_request.php" class="button">Request a Refund Here</a>.</p>
             </div>
         <?php endif; ?>
-
+        <?php if ($isFlagged && $user['userStatus'] !== 'suspended'): ?>
+            <div class="card" style="background-color: #fff4cc;">
+                <p><strong>Your recent transaction has been flagged for review.</strong> Our team may request evidence of your source of funds. You can continue using your account, but activity is being monitored.</p>
+            </div>
+        <?php endif; ?>
         <div class="card">
             <h3>Your Wallets</h3>
             <?php if (empty($accounts)): ?>

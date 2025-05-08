@@ -1,12 +1,6 @@
 <?php
 include "../components/session_protect.php";
 include "../components/config.php";
-include "../components/protect_user.php";
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
 
 // get user's account IDs
 $query = "SELECT accountID FROM Account WHERE userID = :userID";

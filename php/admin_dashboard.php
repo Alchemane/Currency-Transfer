@@ -1,8 +1,6 @@
 <?php
 include "../components/session_protect.php";
 include "../components/config.php";
-include "../components/header.php";
-include "../components/sidebar_admin.php";
 
 if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -10,6 +8,10 @@ if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
 }
 ?>
 
+<?php
+include "../components/header.php";
+include "../components/sidebar_admin.php";
+?>
 <div class="main-content">
     <link rel="stylesheet" href="../css/styles.css">
     <h2>Admin Dashboard</h2>
@@ -26,3 +28,4 @@ if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
         </ul>
     </div>
 </div>
+<?php include "../components/footer.php"; ?>

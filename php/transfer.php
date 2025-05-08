@@ -6,11 +6,6 @@ include "../components/load_currencies.php";
 include "../components/protect_user.php";
 $currencies = loadCurrencies();
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
-
 // fetch users accounts
 $query = "SELECT Account.*, Currency.currencyCode FROM Account JOIN Currency ON Account.currencyID = Currency.currencyID WHERE userID = :userID";
 $stmt = $pdo->prepare($query);
@@ -74,7 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $maxLimit = $limitData['transactionLimits'];
 
                 if ($amount > $maxLimit) {
-                    $error = "Transfer exceeds the allowed limit of £" . number_format($maxLimit, 2);
+                    // continue with transfer, but flag it
+                    $flag = $pdo->prepare("INSERT INTO SuspiciousActivity (userID, activityType, dateDetected, status, evidenceRequested) 
+                                           VALUES (:userID, 'Transfer', datetime('now'), 'Under Review', 1)");
+                    $flag->execute(['userID' => $_SESSION['user_id']]);
                 }
 
                 if (!isset($error)) {

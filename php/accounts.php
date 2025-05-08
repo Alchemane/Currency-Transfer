@@ -43,6 +43,8 @@ $accounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <strong><?php echo htmlspecialchars($account['currencyCode']); ?> Wallet</strong> - 
                             <?php echo htmlspecialchars(number_format($account['balance'], 2)); ?> 
                             (account: <?php echo htmlspecialchars($account['accountNumber']); ?>)
+                            <br>
+                            <a href="delete_wallet.php?id=<?php echo $account['accountID']; ?>" class="button" style="background-color: #ff4d4d; margin-top: 6px;">Delete Wallet</a>
                         </li>
                     <?php endforeach; ?>
                 </ul>

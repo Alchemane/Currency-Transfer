@@ -2,21 +2,11 @@
 include "../components/session_protect.php";
 include "../components/config.php";
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
-
 // fetch user status
 $query = "SELECT userStatus FROM User WHERE userID = :id";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['id' => $_SESSION['user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$user || $user['userStatus'] !== 'suspended') {
-    header("Location: dashboard.php");
-    exit;
-}
 
 // if form submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

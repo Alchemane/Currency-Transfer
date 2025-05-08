@@ -47,6 +47,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>Email</th>
                         <th>Status</th>
                         <th>Actions</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,6 +62,9 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php else: ?>
                                     <a href="?unsuspend=<?php echo $user['userID']; ?>" style="color:green;">Unsuspend</a>
                                 <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="admin_edit_user.php?id=<?php echo $user['userID']; ?>" class="button">Edit</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

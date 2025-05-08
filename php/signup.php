@@ -2,32 +2,42 @@
 include "../components/session_protect.php";
 include "../components/config.php";
 
+$error = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $address = $_POST['address'];
-    $email = $_POST['email'];
+    $firstName = trim($_POST['firstName']);
+    $lastName = trim($_POST['lastName']);
+    $address = trim($_POST['address']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // hash password
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    // check if email already exists
+    $check = $pdo->prepare("SELECT userID FROM User WHERE email = :email");
+    $check->execute(['email' => $email]);
 
-    try {
-        $query = "INSERT INTO User (firstName, lastName, address, userStatus, verificationStatus, email, password)
-                  VALUES (:firstName, :lastName, :address, 'Active', 'Verified', :email, :password)";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'address' => $address,
-            'email' => $email,
-            'password' => $hashedPassword
-        ]);
+    if ($check->fetch()) {
+        $error = "An account with this email already exists.";
+    } else {
+        // hash password securely using bcrypt
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        header("Location: login.php");
-        exit;
-    } catch (PDOException $e) {
-        $error = "Failed To Register User: " . $e->getMessage();
+        try {
+            $query = "INSERT INTO User (firstName, lastName, address, userStatus, verificationStatus, email, password)
+                      VALUES (:firstName, :lastName, :address, 'Active', 'Verified', :email, :password)";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'address' => $address,
+                'email' => $email,
+                'password' => $hashedPassword
+            ]);
+
+            header("Location: login.php?signup=success");
+            exit;
+        } catch (PDOException $e) {
+            $error = "Registration failed due to a server error.";
+        }
     }
 }
 ?>
@@ -45,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="auth-container">
     <h2>Sign Up</h2>
 
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
 
     <form method="POST" action="">
         <input type="text" name="firstName" placeholder="First Name" required>

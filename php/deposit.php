@@ -3,12 +3,7 @@ include "../components/session_protect.php";
 include "../components/config.php";
 include "../components/protect_user.php";
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
-
-// fetch user's GBP account
+// fetch users GBP account
 $query = "SELECT * FROM Account WHERE userID = :userID AND currencyID = (SELECT currencyID FROM Currency WHERE currencyCode = 'GBP')";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['userID' => $_SESSION['user_id']]);
@@ -39,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $gbpAccount) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,9 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $gbpAccount) {
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-
 <?php include "../components/header.php"; ?>
-
 <div class="dashboard-container">
     <?php include "../components/sidebar_user.php"; ?>
 

@@ -2,6 +2,11 @@
 include "../components/session_protect.php";
 include "../components/config.php";
 
+$signupMessage = "";
+if (isset($_GET['signup']) && $_GET['signup'] === "success") {
+    $signupMessage = "Registration successful. Please log in.";
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -57,6 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Login</h2>
 
     <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <?php if (!empty($signupMessage)): ?>
+        <p style="color:green;"><?php echo $signupMessage; ?></p>
+    <?php endif; ?>
 
     <form method="POST" action="">
         <input type="email" name="email" placeholder="Email Address" required>

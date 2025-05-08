@@ -1,9 +1,9 @@
 <?php
-// Database configuration
+// database configuration
 $host = "localhost";
 $dbname = "your_database_name";
-$username = "root"; // Default for XAMPP
-$password = ""; // Default for XAMPP
+$username = "root"; // default for XAMPP
+$password = ""; // default for XAMPP
 
 try {
     $pdo = new PDO("sqlite:" . __DIR__ . "/../database/currency_transfer.db");

@@ -1,8 +1,6 @@
 <?php
 include "../components/session_protect.php";
 include "../components/config.php";
-include "../components/header.php";
-include "../components/sidebar_admin.php";
 
 // protect page for admins only
 if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
@@ -56,7 +54,10 @@ $currencies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <link rel="stylesheet" href="../css/styles.css">
-
+<?php
+include "../components/header.php";
+include "../components/sidebar_admin.php";
+?>
 <div class="main-content">
     <h2>Manage Currencies</h2>
 

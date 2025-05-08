@@ -5,13 +5,8 @@ include "../components/load_currencies.php"; //load currencies!
 include "../components/protect_user.php";
 $currencies = loadCurrencies();
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $currencyCode = $_POST['currencyType']; // user selected code, eg 'USD'
+    $currencyCode = $_POST['currencyType']; // user selected code, eg USD
 
     // fetch currencyID from Currency table
     $stmt = $pdo->prepare("SELECT currencyID FROM Currency WHERE currencyCode = :currencyCode");

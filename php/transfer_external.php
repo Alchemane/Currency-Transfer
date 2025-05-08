@@ -53,6 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'transactionType' => 'external_transfer'
         ]);
 
+        // check admins transaction limit
+        $limitStmt = $pdo->query("SELECT transactionLimits FROM Admin LIMIT 1");
+        $limit = $limitStmt->fetchColumn();
+
+        if ($amount > $limit) {
+            $flag = $pdo->prepare("INSERT INTO SuspiciousActivity (userID, activityType, dateDetected, status, evidenceRequested) 
+                                VALUES (:userID, 'Transfer', datetime('now'), 'Under Review', 1)");
+            $flag->execute(['userID' => $_SESSION['user_id']]);
+        }
+
         $success = "External Transfer Completed Successfully!";
     }
 }

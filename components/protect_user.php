@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') { // not logged in???
+    header("Location: ../php/login.php"); // inside php from root too
+    exit;
+}
+
 if (isset($_SESSION['user_id'])) {
     $query = "SELECT userStatus FROM User WHERE userID = :id";
     $stmt = $pdo->prepare($query);

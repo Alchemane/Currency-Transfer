@@ -169,8 +169,9 @@ form button:hover {
     background-color: #005fa3;
 }
 
-/* buttons */
+/* button */
 .button {
+    margin: 0.5rem;
     background-color: #0074D9;
     color: white;
     padding: 12px 24px;
@@ -184,7 +185,7 @@ form button:hover {
     background-color: #005fa3;
 }
 
-/* tables */
+/* table */
 table {
     width: 100%;
     background-color: white;
@@ -218,6 +219,9 @@ th {
 }
 
 footer {
+    width: 100%;
+    clear: both;
+    position: relative;
     margin-top: 50px;
     padding: 20px;
     background-color: #333;
@@ -225,6 +229,7 @@ footer {
     text-align: center;
     font-size: 14px;
 }
+
 /* about page stuffs */
 .card p, .card ul {
     font-size: 17px;

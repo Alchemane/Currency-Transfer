@@ -3,11 +3,6 @@ include "../components/session_protect.php";
 include "../components/config.php";
 include "../components/protect_user.php";
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
-    header("Location: login.php");
-    exit;
-}
-
 // fetch suspicious activities that need evidence from this user
 $query = "SELECT * FROM SuspiciousActivity WHERE userID = :userID AND evidenceRequested = 1 AND status = 'Under Review'";
 $stmt = $pdo->prepare($query);
